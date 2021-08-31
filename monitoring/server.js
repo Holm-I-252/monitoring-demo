@@ -1,14 +1,21 @@
 const express = require('express')
 const path = require('path')
+const Rollbar = require('rollbar')
+let rollbar = new Rollbar({
+    accessToken: 'e9630bea93354320aa9707b49b2e737d',
+    captureUncaught: true,
+    captureUnhandledRejections: true
+})
 
 const app = express()
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
+    rollbar.info('html files served')
 })
 
 const port = process.env.PORT || 4545
 
 app.listen(port, () => {
-    console.log('running on 4545')
+    console.log(`running on ${port}`)
 })
