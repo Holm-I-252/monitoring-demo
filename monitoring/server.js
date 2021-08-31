@@ -9,7 +9,6 @@ let rollbar = new Rollbar({
 const students = []
 const app = express()
 
-app.use(rollbar.errorHandler())
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'))
@@ -21,11 +20,13 @@ app.post('/api/student', (req, res) => {
     name = name.trim()
     students.push(name)
     rollbar.log("student added", {author: "Ian", type: "manual entry"})
-
+    
     res.status(200).send(students)
 })
 
 const port = process.env.PORT || 4545
+
+app.use(rollbar.errorHandler())
 
 app.listen(port, () => {
     console.log(`running on ${port}`)
