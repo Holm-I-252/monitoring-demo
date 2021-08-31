@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/student', (req, res) => {
-    const {name} = req.body
+    let {name} = req.body
     name = name.trim()
     students.push(name)
     rollbar.log("student added", {author: "Ian", type: "manual entry"})
